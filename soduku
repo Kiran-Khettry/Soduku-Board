@@ -1,6 +1,6 @@
 var cells = []; // array with all cells 0-80
 
-function import_puzzle () {
+function import_puzzle() {
     var soduku1 = [[0,0,0,2,6,0,7,0,1],
                 [6,8,0,0,7,0,0,9,0],
                 [1,9,0,0,0,4,5,0,0],
@@ -29,9 +29,9 @@ function soduku_GUI() {
             input.row = r;
             input.column = c;
             input.square = square_number(r, c);
-            input.onketpress = validate; // validates that a number is entered
+            input.keypress = validate; // validates that a number is entered
 
-            // creates and places inout field in cell element
+            // creates and places input field in cell element
             var cell = document.createElement("td");
             cell.appendChild(input);
 
@@ -41,6 +41,7 @@ function soduku_GUI() {
         table.appendChild(row); // places row into the table
     }
 }
+
 function validate(evt) {
     // stops all non-numeric input
     evt = (evt) ? evt: window.Event;
@@ -55,7 +56,7 @@ function validate(evt) {
 }
 
 function square_number(row, column) {
-    // this function returns square number of cell with position x, y
+    /* this function returns square number of cell with position x, y */
     if (row < 3 && column < 3) { return 0;}
     if (row > 2 && row < 6 && column < 3) { return 1; }
     if (row > 5 && column < 3) { return 2;}
@@ -67,7 +68,7 @@ function square_number(row, column) {
     if (row > 5 && column > 5) { return 8;}
 }
 
-function valid_check() {
+function valid_check(cell, value) {
     // this function check if value is valid, will follow standard soduku rules
     for (var i = 0; i < cells.length; i++) {
         if (cells[i].row == cell.row && cells[i].value == value) {
@@ -90,8 +91,7 @@ function solve_soduku(random_row) {
     var nums = [1,2,3,4,5,6,7,8,9]; // used if generating soduku (g=1)
 
     while (true) {
-        // creates a random first row if generating
-        if (i < 9 && random_row) {
+        if (i < 9 && random_row) { // creates a random first row if generating
             var random_value = nums[Math.floor(Math.random()*nums.length)];
             nums.splice(nums.indexOf(random_value), 1); // removes used value
             cells[i].value = random_value; // assigns value
@@ -151,7 +151,7 @@ function load_soduku() {
 }
 
 function clear_gui() {
-    for (cells of cells) {
+    for (cell of cells) {
         cell.value = ""; // removes value
         cell.a = 0;      // locks all cells
     }
